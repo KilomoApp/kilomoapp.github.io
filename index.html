@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="ro">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kilomo: ITP, RCA, revizii auto</title>
+<meta name="description" content="Aplicația gratuită pentru întreținerea mașinii: îți amintește de revizii, ITP, RCA și rovinietă, citește factura de la service dintr-o poză și îți arată cât te costă mașina. Fără reclame, fără cont.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://kilomoapp.github.io/">
+<meta property="og:title" content="Kilomo: ITP, RCA, revizii auto">
+<meta property="og:description" content="Revizii, ITP, RCA și rovinietă la timp, facturi citite dintr-o poză și costurile mașinii la un loc. Gratuită, fără reclame, fără cont.">
+<meta property="og:image" content="https://kilomoapp.github.io/img/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="586">
+<meta property="og:locale" content="ro_RO">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="apple-itunes-app" content="app-id=6831287090">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<script>
+  // On a phone, straight to its store; ?web shows the page anyway.
+  (function () {
+    if (/[?&]web\b/.test(location.search)) return;
+    var ua = navigator.userAgent;
+    var ios = /iPhone|iPad|iPod/.test(ua) ||
+      (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1);
+    if (ios) location.replace('https://apps.apple.com/ro/app/kilomo-itp-rca-revizii-auto/id6831287090');
+    else if (/Android/.test(ua)) location.replace('https://play.google.com/store/apps/details?id=app.kilomo');
+  })();
+</script>
+<style>
+  :root {
+    --blue: #1E88E5;
+    --blue-dark: #0D47A1;
+    --amber: #FFB300;
+    --bg: #F5F8FC;
+    --card: #FFFFFF;
+    --text: #13233A;
+    --muted: #51627A;
+    --line: #DCE5F0;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0B1220;
+      --card: #131D30;
+      --text: #E8EEF7;
+      --muted: #9DAEC6;
+      --line: #23324A;
+      color-scheme: dark;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font: 17px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+  }
+  a { color: inherit; }
+  .wrap { max-width: 64rem; margin: 0 auto; padding-inline: 1.25rem; }
+
+  header {
+    background: linear-gradient(180deg, var(--blue), var(--blue-dark));
+    color: #fff;
+    padding-block: 3.5rem 0;
+    overflow: hidden;
+  }
+  .hero {
+    display: grid;
+    grid-template-columns: 1.1fr .9fr;
+    gap: 2.5rem;
+    align-items: end;
+  }
+  .hero-text { padding-bottom: 3.5rem; }
+  .brand { display: flex; align-items: center; gap: .9rem; margin-bottom: 1.75rem; }
+  .brand img { width: 64px; height: 64px; border-radius: 16px; box-shadow: 0 6px 20px rgb(0 0 0 / .25); }
+  .brand span { font-size: 1.6rem; font-weight: 700; letter-spacing: .01em; }
+  h1 {
+    font-size: clamp(2rem, 4.5vw, 3rem);
+    line-height: 1.15;
+    margin: 0 0 1rem;
+    text-wrap: balance;
+  }
+  .lead { font-size: 1.15rem; color: #E3F0FF; margin: 0 0 2rem; max-width: 32rem; }
+  .stores { display: flex; flex-wrap: wrap; gap: .75rem; }
+  .store {
+    display: inline-flex;
+    align-items: center;
+    gap: .65rem;
+    padding: .7rem 1.2rem;
+    border-radius: 12px;
+    background: #0A0F1A;
+    color: #fff;
+    text-decoration: none;
+    border: 1px solid rgb(255 255 255 / .18);
+    min-width: 12.5rem;
+    transition: transform .15s ease;
+  }
+  .store:hover { transform: translateY(-2px); }
+  .store svg { width: 26px; height: 26px; flex: none; }
+  .store small { display: block; font-size: .72rem; opacity: .8; line-height: 1.2; }
+  .store b { display: block; font-size: 1.12rem; line-height: 1.25; }
+  .free { margin: 1.25rem 0 0; font-size: .95rem; color: #E3F0FF; }
+  .free strong { color: var(--amber); }
+
+  .phone {
+    justify-self: center;
+    width: min(100%, 320px);
+    border-radius: 36px 36px 0 0;
+    border: 10px solid #0A0F1A;
+    border-bottom: 0;
+    background: #0A0F1A;
+    box-shadow: 0 -10px 40px rgb(0 0 0 / .3);
+    aspect-ratio: 540 / 760;
+    overflow: hidden;
+  }
+  .phone img { display: block; width: 100%; height: auto; }
+
+  main { padding-block: 4rem; }
+  h2 { font-size: 1.6rem; line-height: 1.25; margin: 0 0 .5rem; text-wrap: balance; }
+  .intro { color: var(--muted); margin: 0 0 2.5rem; max-width: 40rem; }
+
+  .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+  .feature {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  .feature .shot { background: linear-gradient(180deg, var(--blue), var(--blue-dark)); padding: 1.25rem 1.25rem 0; }
+  .feature .shot img {
+    display: block;
+    width: 100%;
+    max-width: 240px;
+    margin: 0 auto;
+    border-radius: 14px 14px 0 0;
+    aspect-ratio: 540 / 600;
+    object-fit: cover;
+    object-position: top;
+  }
+  .feature div.text { padding: 1.1rem 1.25rem 1.35rem; }
+  .feature h3 { font-size: 1.1rem; margin: 0 0 .35rem; }
+  .feature p { margin: 0; color: var(--muted); font-size: .98rem; }
+
+  .story {
+    margin-top: 3.5rem;
+    padding: 1.75rem;
+    border-left: 4px solid var(--amber);
+    background: var(--card);
+    border-radius: 0 18px 18px 0;
+    border-top: 1px solid var(--line);
+    border-right: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+  .story p { margin: 0; max-width: 44rem; }
+  .story p + p { margin-top: .75rem; color: var(--muted); }
+
+  .points {
+    margin-top: 3.5rem;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    list-style: none;
+    padding: 0;
+  }
+  .points li { padding: 1rem 1.1rem; border: 1px solid var(--line); border-radius: 14px; background: var(--card); }
+  .points b { display: block; font-size: 1.05rem; }
+  .points span { color: var(--muted); font-size: .92rem; }
+
+  .cta { text-align: center; margin-top: 4rem; }
+  .cta .stores { justify-content: center; }
+  .cta p { color: var(--muted); }
+
+  footer { border-top: 1px solid var(--line); padding-block: 2rem; color: var(--muted); font-size: .92rem; }
+  footer .wrap { display: flex; flex-wrap: wrap; gap: .5rem 1.5rem; justify-content: space-between; }
+
+  @media (max-width: 52rem) {
+    .hero { grid-template-columns: 1fr; gap: 0; }
+    .hero-text { padding-bottom: 2.5rem; }
+    .phone { width: min(100%, 280px); }
+    .features { grid-template-columns: 1fr; }
+    .points { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 26rem) {
+    .store { min-width: 0; flex: 1 1 100%; }
+    .points { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap hero">
+    <div class="hero-text">
+      <div class="brand"><img src="img/icon.png" alt="" width="64" height="64"><span>Kilomo</span></div>
+      <h1>Știi mereu ce revizie urmează la mașina ta</h1>
+      <p class="lead">Îți amintește de revizii, ITP, RCA și rovinietă, citește factura de la service dintr-o poză și îți arată cât te costă mașina.</p>
+      <div class="stores">
+        <a class="store" href="https://apps.apple.com/ro/app/kilomo-itp-rca-revizii-auto/id6831287090">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.37 12.73c-.02-2.24 1.83-3.32 1.91-3.37-1.04-1.52-2.66-1.73-3.24-1.75-1.38-.14-2.69.81-3.39.81-.7 0-1.78-.79-2.92-.77-1.5.02-2.89.87-3.66 2.21-1.56 2.71-.4 6.72 1.12 8.92.74 1.08 1.63 2.29 2.79 2.24 1.12-.04 1.54-.72 2.89-.72 1.35 0 1.73.72 2.91.7 1.2-.02 1.96-1.1 2.7-2.18.85-1.25 1.2-2.46 1.22-2.52-.03-.01-2.33-.9-2.35-3.56zM14.15 6.15c.62-.75 1.03-1.78.92-2.82-.89.04-1.97.59-2.6 1.34-.57.66-1.07 1.72-.94 2.73.99.08 2-.5 2.62-1.25z"/></svg>
+          <span><small>Descarcă din</small><b>App Store</b></span>
+        </a>
+        <a class="store" href="https://play.google.com/store/apps/details?id=app.kilomo">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#34A853" d="M3.6 2.3c-.2.2-.3.6-.3 1v17.4c0 .4.1.8.3 1l9.6-9.7z"/><path fill="#FBBC04" d="m16.4 15.2-3.2-3.2 3.2-3.2 3.9 2.2c1.1.6 1.1 1.6 0 2.2z"/><path fill="#EA4335" d="M16.4 15.2 13.2 12l-9.6 9.7c.4.4 1 .4 1.6.1z"/><path fill="#4285F4" d="M16.4 8.8 5.2 2.2c-.6-.3-1.2-.3-1.6.1l9.6 9.7z"/></svg>
+          <span><small>Descarcă din</small><b>Google Play</b></span>
+        </a>
+      </div>
+      <p class="free"><strong>Gratuită.</strong> Fără reclame. Fără cont.</p>
+    </div>
+    <div class="phone"><img src="img/home.jpg" alt="Ecranul principal Kilomo: kilometrajul și reviziile recomandate în curând" width="540" height="1170"></div>
+  </div>
+</header>
+
+<main class="wrap">
+  <h2>Mașina ta, ținută în ordine fără efort</h2>
+  <p class="intro">Fie că îți notai reviziile pe unde apucai, fie că nu știi ce trebuie schimbat și când, Kilomo îți spune ce urmează și te anunță la timp.</p>
+
+  <div class="features">
+    <article class="feature">
+      <div class="shot"><img src="img/home.jpg" alt="Reviziile recomandate, cu cost estimat" loading="lazy"></div>
+      <div class="text">
+        <h3>Recomandări de revizii</h3>
+        <p>Ulei și filtre, distribuție, frâne, antigel, anvelope și altele, după km și după timp, pentru mașina ta.</p>
+      </div>
+    </article>
+    <article class="feature">
+      <div class="shot"><img src="img/factura.jpg" alt="Lucrările găsite automat pe factură" loading="lazy"></div>
+      <div class="text">
+        <h3>Factura, dintr-o poză</h3>
+        <p>Pozezi factura de la service, iar lucrările, prețurile, data și kilometrajul se completează singure. Sau le introduci manual.</p>
+      </div>
+    </article>
+    <article class="feature">
+      <div class="shot"><img src="img/documente.jpg" alt="Documentele mașinii cu datele de expirare" loading="lazy"></div>
+      <div class="text">
+        <h3>Documente la timp</h3>
+        <p>ITP, RCA, CASCO, rovinietă, trusă medicală, extinctor: te anunțăm cu 30 de zile, o săptămână și o zi înainte.</p>
+      </div>
+    </article>
+  </div>
+
+  <section class="story">
+    <p>„Îmi notam reviziile mașinii în Notes, pe telefon, și nu mai știam ce am schimbat, când și la câți km. Așa că am făcut Kilomo.”</p>
+    <p>O aplicație făcută în România, pentru șoferii din România: termeni, documente și facturi așa cum le găsești la service-urile de aici.</p>
+  </section>
+
+  <ul class="points">
+    <li><b>Gratuită</b><span>Toate funcțiile, fără costuri.</span></li>
+    <li><b>Fără reclame</b><span>Nimic care să te întrerupă.</span></li>
+    <li><b>Fără cont</b><span>O instalezi și o folosești.</span></li>
+    <li><b>Datele rămân pe telefon</b><span>Facturile nu pleacă nicăieri.</span></li>
+  </ul>
+
+  <section class="cta">
+    <h2>Descarcă Kilomo</h2>
+    <p>Pentru iPhone și Android.</p>
+    <div class="stores">
+      <a class="store" href="https://apps.apple.com/ro/app/kilomo-itp-rca-revizii-auto/id6831287090">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.37 12.73c-.02-2.24 1.83-3.32 1.91-3.37-1.04-1.52-2.66-1.73-3.24-1.75-1.38-.14-2.69.81-3.39.81-.7 0-1.78-.79-2.92-.77-1.5.02-2.89.87-3.66 2.21-1.56 2.71-.4 6.72 1.12 8.92.74 1.08 1.63 2.29 2.79 2.24 1.12-.04 1.54-.72 2.89-.72 1.35 0 1.73.72 2.91.7 1.2-.02 1.96-1.1 2.7-2.18.85-1.25 1.2-2.46 1.22-2.52-.03-.01-2.33-.9-2.35-3.56zM14.15 6.15c.62-.75 1.03-1.78.92-2.82-.89.04-1.97.59-2.6 1.34-.57.66-1.07 1.72-.94 2.73.99.08 2-.5 2.62-1.25z"/></svg>
+        <span><small>Descarcă din</small><b>App Store</b></span>
+      </a>
+      <a class="store" href="https://play.google.com/store/apps/details?id=app.kilomo">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#34A853" d="M3.6 2.3c-.2.2-.3.6-.3 1v17.4c0 .4.1.8.3 1l9.6-9.7z"/><path fill="#FBBC04" d="m16.4 15.2-3.2-3.2 3.2-3.2 3.9 2.2c1.1.6 1.1 1.6 0 2.2z"/><path fill="#EA4335" d="M16.4 15.2 13.2 12l-9.6 9.7c.4.4 1 .4 1.6.1z"/><path fill="#4285F4" d="M16.4 8.8 5.2 2.2c-.6-.3-1.2-.3-1.6.1l9.6 9.7z"/></svg>
+        <span><small>Descarcă din</small><b>Google Play</b></span>
+      </a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Kilomo</span>
+    <span><a href="privacy.html">Politica de confidențialitate</a> · <a href="mailto:kilomo.app@gmail.com">kilomo.app@gmail.com</a></span>
+  </div>
+</footer>
+</body>
+</html>
